@@ -718,7 +718,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
         <sub><b>@vivekCS007</b></sub>
       </a>
     </td>
-    <td width="120"></td>
+    <td align="center" width="120">
+      <a href="https://github.com/yuvraj-k-singh">
+        <img src="https://github.com/yuvraj-k-singh.png?size=100" width="100" height="100" style="border-radius:50%; border:2px solid #555;" alt="yuvraj-k-singh" /><br />
+        <sub><b>@yuvraj-k-singh</b></sub>
+      </a>
+    </td>
     <td width="120"></td>
   </tr>
 </table>
