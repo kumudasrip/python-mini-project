@@ -315,26 +315,34 @@ function gameEngine() {
 
 function restartGame() {
     const selector = document.getElementById('difficultySelect');
+    // Apply difficulty settings immediately so speed/score multiplier are correct on restart
     applyDifficultySettings();
     if (selector) selector.disabled = true;
-    document.getElementById('game-over-overlay').classList.add('hidden');
+
+    // Hide overlays
+    const gameOver = document.getElementById('game-over-overlay');
+    if (gameOver) gameOver.classList.add('hidden');
+    const pauseOverlay = document.getElementById('pause-overlay');
+    if (pauseOverlay) pauseOverlay.classList.add('hidden');
+
+    // Reset core game state
     direction = { x: 1, y: 0 };
     snakeArr = [{ x: 13, y: 10 }];
     score = 0;
     isPaused = false;
+    lastPaintTime = 0;
 
-    const pauseOverlay = document.getElementById('pause-overlay');
-    if (pauseOverlay) {
-        pauseOverlay.classList.add('hidden');
-    }
-
+    // Reset UI
     const pauseBtn = document.getElementById('pauseGameBtn');
-    if (pauseBtn) {
-        pauseBtn.textContent = 'Pause';
-    }
-    document.getElementById('score').innerHTML = score;
-    food = { x: 6, y: 7 };
+    if (pauseBtn) pauseBtn.textContent = 'Pause';
+    const scoreEl = document.getElementById('score');
+    if (scoreEl) scoreEl.innerHTML = score;
 
+    // Place food randomly inside playfield bounds
+    food = {
+        x: Math.round(2 + (16 - 2) * Math.random()),
+        y: Math.round(2 + (16 - 2) * Math.random())
+    };
 }
 function togglePause() {
     const pauseOverlay = document.getElementById('pause-overlay');
@@ -358,36 +366,8 @@ function togglePause() {
 function initSnakeGame() {
     window.requestAnimationFrame(main);
 
-    // Set initial historic rendering metrics
+    // Set initial rendering metrics
     updateBestScoreUI();
-    function restartGame() {
-        // Hide game over overlay
-        document.getElementById('game-over-overlay').classList.add('hidden');
-
-        // Reset snake
-        snakeArr = [{ x: 13, y: 10 }];
-
-        // Reset score
-        score = 0;
-        document.getElementById('score').innerHTML = score;
-
-        // Reset direction and start moving
-        direction = { x: 1, y: 0 };
-
-        // Generate new food
-        food = {
-            x: Math.round(2 + (16 - 2) * Math.random()),
-            y: Math.round(2 + (16 - 2) * Math.random())
-        };
-
-        // Re-enable difficulty selection before start
-        if (selector) {
-            selector.disabled = true;
-        }
-
-        // Reset frame timing
-        lastPaintTime = 0;
-    }
 
     // Map difficulty listener parameters
     const selector = document.getElementById('difficultySelect');
@@ -398,11 +378,7 @@ function initSnakeGame() {
     applyDifficultySettings();
 
     document.getElementById('startGameBtn').addEventListener('click', () => {
-        applyDifficultySettings();
-        // Prevent changing parameter matrices on an active engine run
-        if (selector) selector.disabled = true;
-        document.getElementById('game-over-overlay').classList.add('hidden');
-        direction = { x: 1, y: 0 }; // Start moving right
+        restartGame();
     });
 
     document.getElementById('restartSnakeBtn').addEventListener('click', restartGame);
@@ -410,7 +386,7 @@ function initSnakeGame() {
     document.getElementById('overlayRestartBtn').addEventListener('click', restartGame);
 
     window.addEventListener('keydown', e => {
-        // Change difficulty selection dynamic evaluations if arrow key registers 
+        // Disable difficulty selection once arrow keys are pressed
         if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
             if (selector && !selector.disabled) {
                 selector.disabled = true;
