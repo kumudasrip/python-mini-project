@@ -1060,6 +1060,10 @@
                         <span class="sidebar-icon"><i data-lucide="star"></i></span>
                         <span class="sidebar-label">⭐ favorites</span>
                     </button>
+                    <button aria-selected="false" class="sidebar-tab" data-category="tracker" role="tab" tabindex="-1">
+                    <span class="sidebar-icon"><i data-lucide="trophy"></i></span>
+                    <span class="sidebar-label">🏆 my progress</span>
+                    </button>
                     <div class="sidebar-divider"></div>
                     <button aria-selected="false" class="sidebar-tab playground-tab" data-category="playground" id="playgroundTab" role="tab" tabindex="-1">
                         <span class="sidebar-icon"><i data-lucide="terminal"></i></span>
@@ -1216,11 +1220,19 @@
                         <p>Explore the 3n+1 problem!</p>
                     </div>
                     <div class="project-card" data-category="utilities" data-project="color-palette" data-tags="utility,color,palette,css,design,theme,website">
-                        <img class="card-banner" src="assets/banners/color-palette.jpg" alt="Color Palette Suggestor" loading="lazy">
-                        <div class="card-actions"><button class="btn-play">Try It</button></div>
-                        <h3>Color Palette Suggestor</h3>
-                        <p>Generate palettes + CSS snippets for any website type and mood!</p>
-                    </div>
+                    <img class="card-banner" src="assets/banners/color-palette.jpg" alt="Color Palette Suggestor" loading="lazy">
+                    <div class="card-actions"><button class="btn-play">Try It</button></div>
+                    <h3>Color Palette Suggestor</h3>
+                    <p>Generate palettes + CSS snippets for any website type and mood!</p>
+                </div>
+                <div class="project-card" data-category="tracker" data-project="progress-tracker" data-tags="utility,tracker,progress,learning,projects">
+                 <img class="card-banner" src="assets/banners/progress-tracker.svg" alt="Progress Tracker" loading="lazy">
+                    <div class="card-actions"><button class="btn-play">Try It</button></div>
+                    <h3>Progress Tracker</h3>
+                    <p>Track your completed mini projects!</p>
+                </div>
+   
+    
                     <div class="project-card" data-category="math" data-project="coordinate-polar-transform" data-tags="math,coordinate,transformation,geometry">
                         <img class="card-banner" src="assets/banners/coordinate-polar-transform.jpg" alt="Coordinate to Polar" loading="lazy">
                         <div class="card-actions"><button class="btn-play">Try It</button></div>
@@ -1591,6 +1603,7 @@ print('Hello, World!')" spellcheck="false"></textarea>
 <script src="js/projects/rock-paper-scissor.js"></script>
 <script src="js/projects/dice-rolling.js"></script>
 <script src="js/projects/coin-flip.js"></script>
+<script src="js/projects/progress-tracker.js"></script>
 <script src="js/projects/number-guessing.js"></script>
 <script src="js/projects/hangman.js"></script>
 <script src="js/projects/flames.js"></script>
