@@ -865,6 +865,7 @@ function initTicTacToe() {
     if (!gameOver) lockBoard(false);
   }
 }
- 
-initTicTacToe();
+if (document.getElementById("start-btn")) {
+  initTicTacToe();
+}
 //end of init function
