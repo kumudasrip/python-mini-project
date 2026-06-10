@@ -4,6 +4,10 @@
 
 import { updateProjectVisibility } from "./modules/utils.js";
 
+const html = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
@@ -34,6 +38,41 @@ function syncThemeColor(theme) {
     meta.setAttribute("content", theme === "light" ? "#f4f6f9" : "#0c0f1a");
 }
 
+function updateThemeToggleAria(isLightTheme) {
+    if (!themeToggle) return;
+    themeToggle.setAttribute(
+        'aria-label',
+        isLightTheme ? 'Switch to dark mode' : 'Switch to light mode'
+    );
+}
+
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        syncThemeColor(newTheme);
+
+        themeToggle.innerHTML =
+            newTheme === 'light'
+                ? '<i class="fas fa-sun" aria-hidden="true"></i>'
+                : '<i class="fas fa-moon" aria-hidden="true"></i>';
+        updateThemeToggleAria(newTheme === 'light');
+    });
+}
+
+const savedTheme = localStorage.getItem('theme') || 'dark';
+html.setAttribute('data-theme', savedTheme);
+syncThemeColor(savedTheme);
+if (themeToggle) {
+    themeToggle.innerHTML =
+        savedTheme === 'light'
+            ? '<i class="fas fa-sun" aria-hidden="true"></i>'
+            : '<i class="fas fa-moon" aria-hidden="true"></i>';
+    updateThemeToggleAria(savedTheme === 'light');
+}
 function escapeHtml(str) {
   var d = document.createElement("div");
   d.textContent = str;
@@ -79,6 +118,10 @@ function showInfoModal(title, steps) {
     listEl.appendChild(li);
   });
 
+const toggleBackToTopButton = () => {
+    if (!backToTopButton) return;
+    backToTopButton.classList.toggle('visible', window.scrollY > 300);
+};
   overlay.classList.add("active");
 
   function closeModal() {
@@ -88,6 +131,12 @@ function showInfoModal(title, steps) {
     overlay.removeEventListener("click", overlayClick);
   }
 
+if (backToTopButton) {
+    backToTopButton.addEventListener('click', () => {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    });
+}
   function overlayClick(e) {
     if (e.target === overlay) closeModal();
   }
@@ -836,7 +885,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (noResultsMessage) noResultsMessage.style.display = "block";
       return;
     }
-
+    
     if (noResultsMessage) noResultsMessage.style.display = "none";
 
     if (resultsList) {
@@ -1192,6 +1241,41 @@ document.addEventListener("DOMContentLoaded", function () {
       removeTrap();
       removeTrap = null;
     }
+    
+    recentSearchesList.innerHTML = '';
+    recentSearches.slice(0, 5).forEach((search) => {
+        const item = document.createElement('div');
+        item.className = 'dropdown-recent-item';
+        item.innerHTML = `
+            <button type="button" class="dropdown-recent-text" aria-label="Search ${search}">
+                <i class="fas fa-history" style="opacity: 0.5; font-size: 0.9rem;"></i>
+                <span style="flex: 1; color: var(--text-secondary);">${search}</span>
+            </button>
+            <button type="button" class="dropdown-recent-remove" aria-label="Remove search">
+                <i class="fas fa-x"></i>
+            </button>
+        `;
+        
+        const textButton = item.querySelector('.dropdown-recent-text');
+        const removeBtn = item.querySelector('.dropdown-recent-remove');
+        
+        if (textButton) {
+            textButton.addEventListener('click', () => {
+                searchInput.value = search;
+                currentSearchQuery = search;
+                performSearch();
+                closeDropdown();
+            });
+        }
+        
+        if (removeBtn) {
+            removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                recentSearches = recentSearches.filter(s => s !== search);
+                localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
+                renderRecentSearches();
+            });
+        }
 
     // Clear content
     if (modalBody) {
@@ -1582,6 +1666,38 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
+// Open Project Modal
+projectCards.forEach(card => {
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `Open ${card.querySelector('h3')?.textContent || 'project'}`);
+
+    const playButton = card.querySelector('.btn-play');
+    
+    if (playButton) {
+        playButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const projectName = card.getAttribute('data-project');
+            openProject(projectName);
+        });
+    }
+
+    card.addEventListener('click', () => {
+        const projectName = card.getAttribute('data-project');
+        openProject(projectName);
+    });
+
+    card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const projectName = card.getAttribute('data-project');
+            openProject(projectName);
+        }
+    });
+});
+    /* ── Activate item based on viewport center crossing timeline dots ── */
+    var activeIdx = -1;
+    var dots = document.querySelectorAll(".timeline-dot");
     /* ── Timeline Fill Progress ───────────────────────────── */
     function updateTimelineFill() {
       if (!timelineSection) return;
