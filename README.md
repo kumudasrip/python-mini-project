@@ -240,7 +240,7 @@ deactivate
 
 ## 🌐 Web App Catalog
 
-The browser app currently exposes 38 projects:
+The browser app currently exposes 39 projects:
 
 ### Games
 
@@ -263,6 +263,7 @@ The browser app currently exposes 38 projects:
 - Word Scramble
 - Spot the Difference
 - War Card Game
+- Number Sliding Puzzle
 
 ### Math
 
@@ -294,7 +295,6 @@ The browser app currently exposes 38 projects:
 
 These standalone Python project files do not have a browser counterpart yet and are good future-port candidates:
 
-- [games/Number-Sliding-Puzzle/Number-Sliding-Puzzle.py](games/Number-Sliding-Puzzle/Number-Sliding-Puzzle.py)
 - [games/Reverse-Hangman-Game/Reverse-Hangman-Game.py](games/Reverse-Hangman-Game/Reverse-Hangman-Game.py)
 - [math/Happy-Number/Happy-Number.py](math/Happy-Number/Happy-Number.py)
 - [math/Matrix-Calculator/Matrix-Calculator.py](math/Matrix-Calculator/Matrix-Calculator.py)
