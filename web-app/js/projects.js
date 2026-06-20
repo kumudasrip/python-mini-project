@@ -29,7 +29,8 @@ function getProjectHTML(projectName) {
         'reverse-hangman': () => getReverseHangmanHTML,
         'snake-game': getSnakeGameHTML(),
         'bubble-sort': getBubbleSortHTML(),
-        'fourier-series': getFourierSeriesHTML()
+        'fourier-series': getFourierSeriesHTML(),
+        'pathfinding-visualizer': getPathfindingVisualizerHTML()
     };
     
     return projects[projectName] || '<h2>Project Coming Soon!</h2>';
@@ -63,7 +64,8 @@ function initializeProject(projectName) {
         'unit-converter':initUnitConverter,
         'resume-analyzer':initResumeAnalyzer,
         'reverse-hangman': initReverseHangman,
-        'fourier-series': initFourierSeries
+        'fourier-series': initFourierSeries,
+        'pathfinding-visualizer': initPathfindingVisualizer
     };
     
     if (initializers[projectName]) {
@@ -3210,7 +3212,8 @@ function initializeProject(projectName) {
     "number-sliding-puzzle": "initNumberSlidingPuzzle",
     "budget-tracker": "initBudgetTracker",
     "caesar-cipher": "initCaesarCipher",
-    "fourier-series": "initFourierSeries"
+    "fourier-series": "initFourierSeries",
+    "pathfinding-visualizer": "initPathfindingVisualizer"
   };
 
   const initializerName = initializers[projectName];

@@ -1306,8 +1306,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+      var elemToFocus = lastFocusedElement;
       setTimeout(function () {
-        lastFocusedElement.focus({ preventScroll: true });
+        elemToFocus.focus({ preventScroll: true });
       }, 50);
     }
     lastFocusedElement = null;
@@ -1686,35 +1687,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
-// Open Project Modal
-projectCards.forEach(card => {
-    card.tabIndex = 0;
-    card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', `Open ${card.querySelector('h3')?.textContent || 'project'}`);
 
-    const playButton = card.querySelector('.btn-play');
-    
-    if (playButton) {
-        playButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const projectName = card.getAttribute('data-project');
-            openProject(projectName);
-        });
-    }
-
-    card.addEventListener('click', () => {
-        const projectName = card.getAttribute('data-project');
-        openProject(projectName);
-    });
-
-    card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            const projectName = card.getAttribute('data-project');
-            openProject(projectName);
-        }
-    });
-});
     /* ── Activate item based on viewport center crossing timeline dots ── */
     var activeIdx = -1;
     var dots = document.querySelectorAll(".timeline-dot");
