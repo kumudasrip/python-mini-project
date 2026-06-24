@@ -10,7 +10,7 @@ else:
 import importlib.util
 
 # Load validation module directly to avoid broken package __init__.py
-_val_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "scripts", "validation.py"))
+_val_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "utils", "validation.py"))
 _val_spec = importlib.util.spec_from_file_location("validation", _val_path)
 _val_mod = importlib.util.module_from_spec(_val_spec)
 _val_spec.loader.exec_module(_val_mod)
