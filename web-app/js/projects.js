@@ -1584,13 +1584,6 @@ function toPascalCase(str) {
     .join("");
 }
 
-function toPascalCase(str) {
-  return str
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join("");
-}
-
 function getProjectHTML(projectName) {
   const fnName = "get" + toPascalCase(projectName) + "HTML";
 
