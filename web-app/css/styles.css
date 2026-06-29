@@ -7252,3 +7252,35 @@ body.sidebar-collapsed .sidebar-dock .sidebar-footer .sidebar-main-controls {
     grid-template-columns: 1fr;
   }
 }
+
+.stats-dashboard{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:20px;
+margin-top:30px;
+}
+
+.stats-card{
+padding:30px;
+border-radius:18px;
+background:var(--surface);
+border:1px solid var(--border);
+text-align:center;
+cursor:pointer;
+transition:.3s;
+}
+
+.stats-card:hover{
+transform:translateY(-6px);
+box-shadow:0 15px 35px rgba(0,0,0,.2);
+}
+
+.stats-card h3{
+font-size:2.2rem;
+margin-bottom:10px;
+color:var(--accent);
+}
+
+.stats-card p{
+color:var(--text-secondary);
+}
