@@ -24,12 +24,8 @@ DIFFICULTY_INPUT_LIMITS = {
 
 # Detect if running in browser (Pyodide)
 def is_browser():
-    """Return True if running in browser environment (Pyodide)."""
-    try:
-        import js  # Pyodide exposes this global
-        return True
-    except ImportError:
-        return False
+    """Return True if running in a browser environment (Pyodide)."""
+    return sys.platform == "emscripten"
 
 
 # Core, testable logic (no I/O, no global state)
